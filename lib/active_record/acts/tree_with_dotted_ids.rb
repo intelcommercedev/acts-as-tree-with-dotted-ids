@@ -105,7 +105,7 @@ module ActiveRecord
         def ancestors
           if self.dotted_ids
             ids = self.dotted_ids.split('.')[0...-1]
-            self.class.where(:id => ids).reorder('dotted_ids DESC')
+            ids.any? ? self.class.where(:id => ids).reorder('dotted_ids DESC') : []
           else
             node, nodes = self, []
             nodes << node = node.parent while node.parent
